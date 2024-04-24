@@ -56,10 +56,11 @@ function App() {
 
   const filteredTasks = tasks.filter(task => {
     const taskMatchesSearch = task.text.toLowerCase().includes(searchText.toLowerCase());
-    if (!showCompleted) {
-      return taskMatchesSearch && !task.completed;
+    if (showCompleted) {
+      return taskMatchesSearch && task.completed;
+    } else {
+      return taskMatchesSearch;
     }
-    return taskMatchesSearch;
   });
 
   return (
