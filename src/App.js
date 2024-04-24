@@ -44,9 +44,13 @@ function App() {
     setTasks(newTasks);
   };
 
-  const toggleTaskCompletion = (index) => {
-    const newTasks = [...tasks];
-    newTasks[index].completed = !newTasks[index].completed;
+  const toggleTaskCompletion = (taskId) => {
+    const newTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, completed: !task.completed };
+      }
+      return task;
+    });
     setTasks(newTasks);
   };
 
@@ -89,14 +93,14 @@ function App() {
             Show completed tasks
           </label>
           <ul>
-            {filteredTasks.map((task, index) => (
-              <li key={index}>
+            {filteredTasks.map((task) => (
+              <li key={task.id}>
                 <input
                   type="checkbox"
                   checked={task.completed}
-                  onChange={() => toggleTaskCompletion(index)}
+                  onChange={() => toggleTaskCompletion(task.id)}
                 />
-                <span className='task-style' style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+                <span className='task-style' style={{ textDecoration: task.id.completed ? 'line-through' : 'none' }}>
                   {task.text}
                 </span>
                 <button className='btn-delete' onClick={() => deleteTask(task.id)}><svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
